@@ -191,6 +191,4 @@ Kontribusi sangat terbuka! Silakan:
 ---
 
 
-Dibuat dengan ❤️ untuk **JM Souvenir** — solusi piala, trofi, medali & plakat custom Anda.
 
-</div>

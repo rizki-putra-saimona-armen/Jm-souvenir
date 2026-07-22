@@ -1,0 +1,76 @@
+{% extends "base.html" %}
+{% block title %}Cara Order - JM Souvenir{% endblock %}
+{% block content %}
+<div class="container py-3">
+
+  <div class="text-center mb-5">
+    <span style="background:var(--accent-light);color:var(--primary);border-radius:20px;padding:4px 16px;font-size:12px;font-weight:700;letter-spacing:0.5px">PANDUAN PEMESANAN</span>
+    <h2 style="font-family:'Playfair Display',serif;color:var(--primary-dark);margin-top:10px">Cara Order</h2>
+    <p style="color:var(--text-muted);font-size:14px">Pesan produk JM Souvenir dalam 4 langkah mudah</p>
+  </div>
+
+  <!-- Langkah-langkah -->
+  <div class="row g-3 mb-5">
+    {% set steps = [
+      ("🛍️", "1", "Pilih Produk", "Jelajahi katalog kami, klik produk untuk melihat detail, harga, dan foto lengkap."),
+      ("💬", "2", "Hubungi via WA", "Klik tombol 'Pesan via WhatsApp' — pesan berisi nama & harga produk terkirim otomatis."),
+      ("💳", "3", "Konfirmasi & Bayar", "Kami konfirmasi pesanan dan kirimkan info rekening / QRIS untuk pembayaran."),
+      ("📦", "4", "Produk Dikirim", "Setelah pembayaran dikonfirmasi, pesanan langsung kami proses dan kirimkan.")
+    ] %}
+    {% for icon, num, title, desc in steps %}
+    <div class="col-6 col-md-3">
+      <div class="content-card text-center h-100" style="padding:24px 16px">
+        <div style="font-size:2.4rem;margin-bottom:10px">{{ icon }}</div>
+        <div style="width:32px;height:32px;background:var(--accent);color:var(--primary-dark);border-radius:50%;font-weight:800;font-size:14px;display:flex;align-items:center;justify-content:center;margin:0 auto 12px">{{ num }}</div>
+        <h6 style="font-family:'Playfair Display',serif;color:var(--primary-dark);font-size:14px;margin-bottom:8px">{{ title }}</h6>
+        <p style="font-size:12.5px;color:var(--text-muted);line-height:1.55;margin:0">{{ desc }}</p>
+      </div>
+    </div>
+    {% endfor %}
+  </div>
+
+  <!-- Pembayaran & Pengiriman -->
+  <div class="row g-3 mb-4">
+    <div class="col-md-6">
+      <div class="content-card h-100">
+        <h5 style="font-family:'Playfair Display',serif;color:var(--primary-dark);margin-bottom:16px">
+          <i class="fas fa-credit-card me-2" style="color:var(--accent)"></i>Metode Pembayaran
+        </h5>
+        <ul class="list-unstyled mb-0" style="font-size:13.5px">
+          <li class="mb-2"><i class="fas fa-check-circle me-2" style="color:#27AE60"></i>Transfer Bank (BCA, BNI, BRI, Mandiri)</li>
+          <li class="mb-2"><i class="fas fa-check-circle me-2" style="color:#27AE60"></i>QRIS / Scan Barcode</li>
+          <li class="mb-2"><i class="fas fa-check-circle me-2" style="color:#27AE60"></i>OVO, GoPay, Dana, ShopeePay</li>
+          <li class="mb-2"><i class="fas fa-check-circle me-2" style="color:#27AE60"></i>COD – area Yogyakarta</li>
+        </ul>
+      </div>
+    </div>
+    <div class="col-md-6">
+      <div class="content-card h-100">
+        <h5 style="font-family:'Playfair Display',serif;color:var(--primary-dark);margin-bottom:16px">
+          <i class="fas fa-truck me-2" style="color:var(--accent)"></i>Info Pengiriman
+        </h5>
+        <ul class="list-unstyled mb-0" style="font-size:13.5px">
+          <li class="mb-2"><i class="fas fa-check-circle me-2" style="color:#27AE60"></i>JNE, J&T, SiCepat, Anteraja</li>
+          <li class="mb-2"><i class="fas fa-check-circle me-2" style="color:#27AE60"></i>Same Day Delivery – area Yogyakarta</li>
+          <li class="mb-2"><i class="fas fa-check-circle me-2" style="color:#27AE60"></i>Gratis ongkir untuk pesanan tertentu</li>
+          <li class="mb-2"><i class="fas fa-check-circle me-2" style="color:#27AE60"></i>Estimasi 1–3 hari kerja (luar kota)</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- CTA WhatsApp -->
+  <div style="background:linear-gradient(135deg,var(--primary-dark) 0%,var(--primary) 100%);border-radius:var(--radius-lg);padding:36px 24px;text-align:center;color:white">
+    <div style="font-size:2rem;margin-bottom:8px">💬</div>
+    <h4 style="color:white;font-family:'Playfair Display',serif;margin-bottom:6px">Siap Memesan?</h4>
+    <p style="color:rgba(255,255,255,0.8);font-size:13.5px;margin-bottom:20px">
+      Chat langsung ke WhatsApp kami — CS siap membantu 24 jam!
+    </p>
+    <a href="https://wa.me/6285664322214?text=Halo%20JM%20Souvenir%2C%20saya%20ingin%20memesan%20produk" 
+       class="btn-wa btn px-5 py-2" target="_blank" style="font-size:14px;border-radius:24px">
+      <i class="fab fa-whatsapp me-2" style="font-size:16px"></i> Pesan Sekarang via WhatsApp
+    </a>
+  </div>
+
+</div>
+{% endblock %}

@@ -1,0 +1,163 @@
+{% extends "base.html" %}
+{% block title %}JM Souvenir - Piala, Trofi & Souvenir Jogja{% endblock %}
+{% block content %}
+
+<!-- Hero Banner dengan foto toko -->
+{% set toko_img = url_for('static', filename='images/toko.webp') %}
+<div class="container-fluid px-3 px-md-4">
+  <div class="hero-banner mb-4" id="heroBanner" style="background-image:linear-gradient(135deg,rgba(30,14,6,0.90) 0%,rgba(74,50,39,0.78) 50%,rgba(30,14,6,0.65) 100%),url('{{ toko_img }}');background-size:cover;background-position:center 35%;min-height:290px;position:relative;overflow:hidden">
+
+    <!-- Glow ornamen -->
+    <div style="position:absolute;inset:0;background:radial-gradient(ellipse at 78% 50%,rgba(201,168,76,0.13) 0%,transparent 60%);pointer-events:none;z-index:0"></div>
+
+    <div style="position:relative;z-index:1;max-width:560px">
+      <div style="background:linear-gradient(135deg,var(--accent),#E8C55A);color:var(--primary-dark);border-radius:20px;padding:4px 14px;font-size:11.5px;font-weight:800;display:inline-flex;align-items:center;gap:6px;margin-bottom:14px;letter-spacing:0.5px;box-shadow:0 2px 10px rgba(201,168,76,0.35)">
+        🏆 JM JASA MULIA ANKABUT SOUVENIR
+      </div>
+      <h1 style="font-size:clamp(1.7rem,4vw,2.6rem);line-height:1.15;margin-bottom:12px;text-shadow:0 2px 12px rgba(0,0,0,0.3)">
+        Souvenir untuk<br>Setiap Momen Istimewa
+      </h1>
+      <p style="font-size:14px;color:rgba(255,255,255,0.82);margin-bottom:26px;line-height:1.7">
+        Piala · Trofi · Medali · Plakat · Souvenir Custom<br>
+        <span style="font-size:12px;color:rgba(255,255,255,0.58)">
+          <i class="fas fa-map-marker-alt me-1"></i> Jl. Mas Suharto, Kios Jambu No. 3 – Danurejan, Yogyakarta
+        </span>
+      </p>
+      <div class="d-flex gap-2 flex-wrap">
+        <a href="{{ url_for('main.catalog') }}" class="btn-hero">
+          Belanja Sekarang <i class="fas fa-arrow-right"></i>
+        </a>
+        <a href="https://wa.me/6287710172566?text=Halo%20JM%20Souvenir%2C%20saya%20ingin%20konsultasi%20produk"
+           target="_blank"
+           style="background:rgba(37,211,102,0.15);color:white;border:1.5px solid rgba(37,211,102,0.5);border-radius:24px;padding:10px 20px;font-weight:700;font-size:13.5px;text-decoration:none;display:inline-flex;align-items:center;gap:7px;backdrop-filter:blur(4px)">
+          <i class="fab fa-whatsapp"></i> Konsultasi Gratis
+        </a>
+      </div>
+    </div>
+
+
+  </div>
+</div>
+
+<div class="container-fluid px-3 px-md-4">
+
+  <!-- Feature Highlights -->
+  <div class="row g-2 mb-4">
+
+    <div class="col-6 col-md-3">
+      <div class="content-card text-center py-3 px-2">
+        <div style="font-size:1.7rem;margin-bottom:6px">🚚</div>
+        <div style="font-size:12.5px;font-weight:700;color:var(--primary-dark)">Gratis Ongkir</div>
+        <div style="font-size:11px;color:var(--text-muted)">Pesanan tertentu</div>
+      </div>
+    </div>
+    <div class="col-6 col-md-3">
+      <div class="content-card text-center py-3 px-2">
+        <div style="font-size:1.7rem;margin-bottom:6px">✅</div>
+        <div style="font-size:12.5px;font-weight:700;color:var(--primary-dark)">100% Original</div>
+        <div style="font-size:11px;color:var(--text-muted)">Garansi keaslian</div>
+      </div>
+    </div>
+    <div class="col-6 col-md-3">
+      <div class="content-card text-center py-3 px-2">
+        <div style="font-size:1.7rem;margin-bottom:6px">💬</div>
+        <div style="font-size:12.5px;font-weight:700;color:var(--primary-dark)">CS 24 Jam</div>
+        <div style="font-size:11px;color:var(--text-muted)">Siap membantu Anda</div>
+      </div>
+    </div>
+    <div class="col-6 col-md-3">
+      <div class="content-card text-center py-3 px-2">
+        <div style="font-size:1.7rem;margin-bottom:6px">🔄</div>
+        <div style="font-size:12.5px;font-weight:700;color:var(--primary-dark)">Mudah Retur</div>
+        <div style="font-size:11px;color:var(--text-muted)">7 hari retur</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Produk Unggulan -->
+  <div class="section-header">
+    <div class="section-title">Produk Unggulan</div>
+    <a href="{{ url_for('main.catalog') }}" class="section-see-all">
+      Lihat Semua <i class="fas fa-chevron-right"></i>
+    </a>
+  </div>
+
+  <div class="row g-3 mb-5">
+    {% for product in products %}
+    <div class="col-6 col-md-3">
+      <div class="product-card card h-100" style="position:relative">
+        {% if loop.index <= 3 %}
+        <span class="product-badge badge-hot">HOT</span>
+        {% endif %}
+        <a href="{{ url_for('main.product_detail', product_id=product.id) }}" class="text-decoration-none">
+          <img loading="lazy" src="{{ product.image_url or 'https://picsum.photos/seed/' ~ product.id ~ '/400/300' }}"
+               class="card-img-top" alt="{{ product.name }}"/>
+          <div class="card-body" style="padding:10px 12px 6px">
+            <div class="product-price">Rp {{ "{:,.0f}".format(product.price) }}</div>
+            <p class="card-title">{{ product.name }}</p>
+            <div class="d-flex justify-content-between align-items-center mt-1">
+              <span class="product-sold">⭐ 4.9 · Terjual 120+</span>
+              <span class="product-location">Jogja</span>
+            </div>
+          </div>
+        </a>
+        <!-- Tombol Aksi -->
+        <div class="px-2 pb-2 d-flex gap-1">
+          <form method="POST" action="{{ url_for('cart.add_to_cart', product_id=product.id) }}" style="flex:1">
+            <button type="submit" class="btn btn-add-cart w-100" style="font-size:11.5px;padding:6px 4px;border-radius:8px">
+              <i class="fas fa-cart-plus"></i> Keranjang
+            </button>
+          </form>
+          <button type="button" class="btn btn-wa"
+                  onclick="waOrder('{{ product.name }}', {{ product.price }})"
+                  style="font-size:11.5px;padding:6px 8px;border-radius:8px">
+            <i class="fab fa-whatsapp"></i>
+          </button>
+        </div>
+      </div>
+    </div>
+    {% endfor %}
+  </div>
+
+  <!-- CTA Banner WhatsApp -->
+  <div style="background:linear-gradient(135deg,var(--primary-dark) 0%,var(--primary) 100%);border-radius:var(--radius-lg);padding:32px;text-align:center;margin-bottom:40px;color:white">
+    <div style="font-size:2rem;margin-bottom:8px">💬</div>
+    <h4 style="color:white;font-size:1.3rem;margin-bottom:6px">Butuh Bantuan atau Custom Order?</h4>
+    <p style="color:rgba(255,255,255,0.85);font-size:14px;margin-bottom:18px">
+      Tim kami siap membantu Anda 24 jam via WhatsApp. Konsultasi gratis!
+    </p>
+    <a href="https://wa.me/6287710172566?text=Halo%20JM%20Souvenir%2C%20saya%20ingin%20konsultasi%20pesanan%20custom" 
+       target="_blank"
+       style="background:white;color:#1A6B3A;border-radius:24px;padding:10px 28px;font-weight:800;font-size:14px;text-decoration:none;display:inline-flex;align-items:center;gap:8px">
+      <i class="fab fa-whatsapp"></i> Chat WhatsApp Sekarang
+    </a>
+  </div>
+
+</div>
+
+<script>
+function waOrder(name, price) {
+  const formatted = price.toLocaleString('id-ID');
+  const msg = `Halo JM Souvenir, saya ingin memesan:\n\n*${name}*\n💰 Harga: Rp ${formatted}\n\nMohon konfirmasi ketersediaan dan cara pembayarannya. Terima kasih!`;
+  window.open(`https://wa.me/6287710172566?text=${encodeURIComponent(msg)}`, '_blank');
+}
+</script>
+
+{% endblock %}
+
+<script>
+// Auto-swap hero background ke WebP jika browser support & file ada
+(function() {
+  var webpUrl = "{{ url_for('static', filename='images/toko.webp') }}";
+  var gradient = "linear-gradient(135deg,rgba(30,14,6,0.90) 0%,rgba(74,50,39,0.78) 50%,rgba(30,14,6,0.65) 100%)";
+  var el = document.getElementById('heroBanner');
+  if (!el) return;
+  // Test WebP support
+  var img = new Image();
+  img.onload = function() {
+    // WebP ada & bisa diload, swap background
+    el.style.backgroundImage = gradient + ",url('" + webpUrl + "')";
+  };
+  img.src = webpUrl;
+})();
+</script>

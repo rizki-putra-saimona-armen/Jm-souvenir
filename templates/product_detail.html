@@ -1,0 +1,115 @@
+{% extends "base.html" %}
+{% block title %}{{ product.name }} - JM Souvenir{% endblock %}
+{% block content %}
+
+<!-- Breadcrumb -->
+<nav aria-label="breadcrumb" class="mb-3">
+  <ol class="breadcrumb" style="font-size:12.5px;background:none;padding:0">
+    <li class="breadcrumb-item"><a href="{{ url_for('main.home') }}" style="color:var(--primary)">Beranda</a></li>
+    <li class="breadcrumb-item"><a href="{{ url_for('main.catalog') }}" style="color:var(--primary)">Produk Kami</a></li>
+    <li class="breadcrumb-item active" style="color:var(--text-muted)">{{ product.name }}</li>
+  </ol>
+</nav>
+
+<div class="content-card">
+  <div class="row g-4">
+
+    <!-- Gambar Produk -->
+    <div class="col-md-5">
+      <div style="position:relative;border-radius:var(--radius-lg);overflow:hidden;background:#F5F0EC">
+        <img src="{{ product.image_url or 'https://picsum.photos/seed/' ~ product.id ~ '/600/500' }}"
+             class="detail-image" alt="{{ product.name }}" id="mainProductImg"/>
+      </div>
+    </div>
+
+    <!-- Info Produk -->
+    <div class="col-md-7">
+      <span class="badge-category">{{ product.category.name if product.category else "Souvenir" }}</span>
+      <h2 class="mt-2 mb-1" style="font-size:1.5rem;line-height:1.25">{{ product.name }}</h2>
+
+      <!-- Rating -->
+      <div class="d-flex align-items-center gap-3 mb-3" style="font-size:13px;color:var(--text-muted)">
+        <span style="color:#F59E0B;font-size:14px">★★★★★</span>
+        <strong style="color:var(--dark)">4.9</strong>
+        <span>·</span>
+        <span>Terjual 500+</span>
+        <span>·</span>
+        <span style="color:var(--primary)">Yogyakarta</span>
+      </div>
+
+      <!-- Harga -->
+      <div style="background:var(--accent-light);border-radius:var(--radius);padding:16px 18px;margin:14px 0;border-left:4px solid var(--accent)">
+        <div style="font-size:12px;color:var(--text-muted);margin-bottom:2px">Harga</div>
+        <div class="detail-price">Rp {{ "{:,.0f}".format(product.price) }}</div>
+        {% if product.original_price and product.original_price > product.price %}
+        <div style="font-size:12.5px;text-decoration:line-through;color:var(--text-muted)">
+          Rp {{ "{:,.0f}".format(product.original_price) }}
+        </div>
+        {% endif %}
+      </div>
+
+      <hr style="border-color:#EDE0D4;margin:14px 0"/>
+
+      <!-- Deskripsi -->
+      <p style="font-size:13.5px;color:#555;line-height:1.75;margin-bottom:14px">{{ product.description }}</p>
+
+      <!-- Stok -->
+      <div class="d-flex align-items-center gap-2 mb-4">
+        <span style="font-size:13px;color:var(--text-muted)">Stok:</span>
+        <span class="detail-stock-badge">
+          <i class="fas fa-check-circle me-1"></i>{{ product.stock }} tersedia
+        </span>
+      </div>
+
+      <!-- Trust Badges -->
+      <div class="trust-badges mb-4">
+        <span class="trust-badge"><i class="fas fa-shield-alt me-1" style="color:var(--primary)"></i>Garansi Original</span>
+        <span class="trust-badge"><i class="fas fa-undo me-1" style="color:var(--accent)"></i>7 Hari Retur</span>
+      </div>
+
+      <!-- TOMBOL AKSI -->
+      <div class="d-flex gap-2 mb-3">
+        <!-- Tambah ke Keranjang -->
+        <form method="POST" action="{{ url_for('cart.add_to_cart', product_id=product.id) }}" style="flex:1">
+          <button type="submit" class="btn btn-add-cart w-100 py-2" style="font-size:14px">
+            <i class="fas fa-cart-plus"></i> Tambah ke Keranjang
+          </button>
+        </form>
+      </div>
+
+      <!-- Beli via WhatsApp -->
+      <button type="button" class="btn btn-wa w-100 py-2" onclick="beliViaWA()" style="font-size:14px">
+        <i class="fab fa-whatsapp" style="font-size:16px"></i> Pesan via WhatsApp
+      </button>
+
+      <p style="font-size:11.5px;color:var(--text-muted);text-align:center;margin-top:8px">
+        <i class="fas fa-lock me-1"></i>Transaksi aman · CS siap 24 jam
+      </p>
+    </div>
+  </div>
+</div>
+
+<!-- Info Produk Tab-style -->
+<div class="content-card mt-3">
+  <h5 style="color:var(--primary-dark);font-size:1.1rem;border-bottom:2px solid var(--primary-light);padding-bottom:10px;margin-bottom:14px">
+    <i class="fas fa-info-circle me-2" style="color:var(--accent)"></i>Detail Produk
+  </h5>
+  <div class="row g-2" style="font-size:13.5px">
+    <div class="col-6 col-md-3"><span style="color:var(--text-muted)">Kategori</span><br><strong>{{ product.category.name if product.category else "-" }}</strong></div>
+    <div class="col-6 col-md-3"><span style="color:var(--text-muted)">Stok</span><br><strong>{{ product.stock }} pcs</strong></div>
+    <div class="col-6 col-md-3"><span style="color:var(--text-muted)">Terjual</span><br><strong>{{ product.total_sold }}+ pcs</strong></div>
+    <div class="col-6 col-md-3"><span style="color:var(--text-muted)">Lokasi</span><br><strong>Yogyakarta</strong></div>
+  </div>
+</div>
+
+<script>
+function beliViaWA() {
+  const name = {{ product.name | tojson }};
+  const price = {{ product.price }};
+  const formatted = price.toLocaleString('id-ID');
+  const msg = `Halo JM Souvenir, saya ingin memesan:\n\n*${name}*\n💰 Harga: Rp ${formatted}\n\nMohon info ketersediaan dan cara pembayarannya. Terima kasih!`;
+  window.open(`https://wa.me/6287710172566?text=${encodeURIComponent(msg)}`, '_blank');
+}
+</script>
+
+{% endblock %}

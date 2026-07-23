@@ -1,0 +1,111 @@
+{% extends "base.html" %}
+{% block title %}Kontak & Alamat Kami - JM Souvenir{% endblock %}
+{% block content %}
+<div class="container py-3">
+
+  <div class="text-center mb-5">
+    <span style="background:var(--accent-light);color:var(--primary);border-radius:20px;padding:4px 16px;font-size:12px;font-weight:700;letter-spacing:0.5px">HUBUNGI KAMI</span>
+    <h2 style="font-family:'Playfair Display',serif;color:var(--primary-dark);margin-top:10px">Kontak & Alamat Kami</h2>
+    <p style="color:var(--text-muted);font-size:14px">Jangan ragu untuk menghubungi kami kapan saja</p>
+  </div>
+
+  <!-- Kontak Cards -->
+  <div class="row g-3 mb-4">
+    <div class="col-md-4">
+      <div class="content-card text-center h-100" style="padding:28px 20px">
+        <div style="width:56px;height:56px;background:#E8F8EE;border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0 auto 14px;font-size:1.5rem;color:#25D366">
+          <i class="fab fa-whatsapp"></i>
+        </div>
+        <h6 style="font-family:'Playfair Display',serif;color:var(--primary-dark);margin-bottom:6px">WhatsApp</h6>
+        <p style="font-size:12.5px;color:var(--text-muted);margin-bottom:14px">Respons cepat, siap membantu 24 jam</p>
+        <a href="https://wa.me/6287710172566?text=Halo%20JM%20Souvenir%2C%20saya%20ingin%20bertanya" 
+           class="btn-wa btn w-100" target="_blank" style="border-radius:20px;font-size:13px;padding:8px">
+          <i class="fab fa-whatsapp me-1"></i> +62 877-1017-2566
+        </a>
+      </div>
+    </div>
+    <div class="col-md-4">
+      <div class="content-card text-center h-100" style="padding:28px 20px">
+        <div style="width:56px;height:56px;background:var(--accent-light);border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0 auto 14px;font-size:1.5rem;color:var(--primary)">
+          <i class="fas fa-envelope"></i>
+        </div>
+        <h6 style="font-family:'Playfair Display',serif;color:var(--primary-dark);margin-bottom:6px">Email</h6>
+        <p style="font-size:12.5px;color:var(--text-muted);margin-bottom:14px">Kirim pertanyaan atau permintaan custom</p>
+        <a href="mailto:info@jmsouvenir.com" 
+           class="btn btn-primary w-100" style="border-radius:20px;font-size:13px;padding:8px">
+          <i class="fas fa-envelope me-1"></i> info@jmsouvenir.com
+        </a>
+      </div>
+    </div>
+    <div class="col-md-4">
+      <div class="content-card text-center h-100" style="padding:28px 20px">
+        <div style="width:56px;height:56px;background:var(--primary-light);border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0 auto 14px;font-size:1.5rem;color:var(--primary-dark)">
+          <i class="fas fa-clock"></i>
+        </div>
+        <h6 style="font-family:'Playfair Display',serif;color:var(--primary-dark);margin-bottom:6px">Jam Operasional</h6>
+        <p style="font-size:12.5px;color:var(--text-muted);margin-bottom:4px">Senin – Sabtu: <strong>08.00 – 21.00</strong> WIB</p>
+        <p style="font-size:12.5px;color:var(--text-muted);margin-bottom:0">Minggu: <strong>09.00 – 17.00</strong> WIB</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Alamat & Maps -->
+  <div class="row g-3 mb-4">
+    <div class="col-md-5">
+      <div class="content-card h-100">
+        <h5 style="font-family:'Playfair Display',serif;color:var(--primary-dark);margin-bottom:16px">
+          <i class="fas fa-map-marker-alt me-2" style="color:var(--accent)"></i>Alamat Toko
+        </h5>
+        <div style="font-size:13.5px;line-height:2;color:var(--dark)">
+          <strong>JM Souvenir</strong><br>
+          <span style="color:var(--text-muted)">Jl. Mas Suharto, Kios Jambu No. 3<br>
+          Danurejan, Yogyakarta<br>
+          Indonesia</span>
+        </div>
+        <hr style="border-color:var(--primary-light);margin:16px 0">
+        <p style="font-size:12.5px;color:var(--text-muted);margin:0">
+          <i class="fas fa-info-circle me-1" style="color:var(--accent)"></i>
+          Tersedia layanan antar area Yogyakarta dan pengiriman ke seluruh Indonesia.
+        </p>
+        <a href="https://wa.me/6287710172566?text=Halo%20JM%20Souvenir%2C%20saya%20ingin%20ke%20toko%20di%20Jl.%20Mas%20Suharto%20Kios%20Jambu%20No.3%20Danurejan.%20Bisa%20info%20petunjuk%20arahnya%3F" 
+           target="_blank"
+           class="btn btn-outline-primary mt-3 w-100" style="border-radius:20px;font-size:13px">
+          <i class="fab fa-whatsapp me-1"></i> Tanya Lokasi via WA
+        </a>
+      </div>
+    </div>
+    <div class="col-md-7">
+      <div class="content-card h-100 p-0" style="overflow:hidden;min-height:280px">
+        <iframe 
+          src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3952.8!2d110.36930!3d-7.79441!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2e7a5a1b1b1b1b1b%3A0x1b1b1b1b1b1b1b1b!2sJl.%20Mas%20Suharto%2C%20Kios%20Jambu%20No.%203%2C%20Danurejan%2C%20Yogyakarta!5e0!3m2!1sid!2sid!4v1234567890"
+          width="100%" height="220" style="border:0;display:block" 
+          allowfullscreen loading="lazy">
+        </iframe>
+        <a href="https://maps.app.goo.gl/oudBYt2ggV7roPFU9" target="_blank"
+           class="btn btn-primary w-100" style="border-radius:0 0 var(--radius-lg) var(--radius-lg);font-size:13px;padding:10px">
+          <i class="fas fa-map-marker-alt me-1"></i> Buka di Google Maps
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Sosial Media -->
+  <div class="content-card">
+    <h5 style="font-family:'Playfair Display',serif;color:var(--primary-dark);margin-bottom:16px">
+      <i class="fas fa-share-alt me-2" style="color:var(--accent)"></i>Ikuti Kami
+    </h5>
+    <div class="d-flex gap-3 flex-wrap">
+      <a href="#" class="btn btn-outline-danger" style="border-radius:20px;font-size:13px">
+        <i class="fab fa-instagram me-1"></i> @jmsouvenir
+      </a>
+      <a href="#" class="btn btn-outline-primary" style="border-radius:20px;font-size:13px">
+        <i class="fab fa-facebook me-1"></i> JM Souvenir
+      </a>
+      <a href="https://wa.me/6287710172566" class="btn-wa btn" target="_blank" style="border-radius:20px;font-size:13px;padding:6px 18px">
+        <i class="fab fa-whatsapp me-1"></i> WhatsApp
+      </a>
+    </div>
+  </div>
+
+</div>
+{% endblock %}

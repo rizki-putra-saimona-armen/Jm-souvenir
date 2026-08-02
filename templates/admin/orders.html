@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+{% block title %}Daftar Pesanan - Admin{% endblock %}
+{% block content %}
+<h3 class="fw-bold mb-4">🧾 Daftar Pesanan</h3>
+<table class="table table-bordered table-hover">
+  <thead class="table-dark">
+    <tr><th>ID</th><th>User</th><th>Total</th><th>Status</th><th>Tanggal</th></tr>
+  </thead>
+  <tbody>
+    {% for order in orders %}
+    <tr>
+      <td>{{ order.id }}</td>
+      <td>{{ order.user.username }}</td>
+      <td>Rp {{ "{:,.0f}".format(order.total) }}</td>
+      <td><span class="badge bg-{{ 'success' if order.status == 'done' else 'warning' }}">{{ order.status }}</span></td>
+      <td>{{ order.created_at.strftime("%d %b %Y") }}</td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+{% endblock %}

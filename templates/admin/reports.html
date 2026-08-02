@@ -1,0 +1,113 @@
+{% extends "base.html" %}
+{% block title %}Laporan - Admin{% endblock %}
+{% block content %}
+<h3 class="fw-bold mb-4">📋 Laporan Penjualan</h3>
+
+<!-- Filter -->
+<div class="card shadow-sm p-3 mb-4">
+  <form method="GET" class="row g-3 align-items-end">
+    <div class="col-md-3">
+      <label class="form-label fw-semibold">Dari Tanggal</label>
+      <input type="date" name="start_date" class="form-control" value="{{ request.args.get('start_date', '') }}">
+    </div>
+    <div class="col-md-3">
+      <label class="form-label fw-semibold">Sampai Tanggal</label>
+      <input type="date" name="end_date" class="form-control" value="{{ request.args.get('end_date', '') }}">
+    </div>
+    <div class="col-md-3">
+      <label class="form-label fw-semibold">Status Pesanan</label>
+      <select name="status" class="form-select">
+        <option value="">Semua Status</option>
+        <option value="pending" {{ 'selected' if request.args.get('status') == 'pending' }}>Pending</option>
+        <option value="processing" {{ 'selected' if request.args.get('status') == 'processing' }}>Diproses</option>
+        <option value="shipped" {{ 'selected' if request.args.get('status') == 'shipped' }}>Dikirim</option>
+        <option value="done" {{ 'selected' if request.args.get('status') == 'done' }}>Selesai</option>
+        <option value="cancelled" {{ 'selected' if request.args.get('status') == 'cancelled' }}>Dibatalkan</option>
+      </select>
+    </div>
+    <div class="col-md-3">
+      <button type="submit" class="btn btn-primary w-100">Filter</button>
+    </div>
+  </form>
+</div>
+
+<!-- Ringkasan -->
+<div class="row g-3 mb-4">
+  <div class="col-md-3">
+    <div class="card shadow-sm text-center p-3">
+      <h4 class="fw-bold text-success mb-0">Rp {{ "{:,.0f}".format(total_revenue or 0) }}</h4>
+      <small class="text-muted">Total Pendapatan</small>
+    </div>
+  </div>
+  <div class="col-md-3">
+    <div class="card shadow-sm text-center p-3">
+      <h4 class="fw-bold text-primary mb-0">{{ total_orders or 0 }}</h4>
+      <small class="text-muted">Total Pesanan</small>
+    </div>
+  </div>
+  <div class="col-md-3">
+    <div class="card shadow-sm text-center p-3">
+      <h4 class="fw-bold text-warning mb-0">{{ total_items or 0 }}</h4>
+      <small class="text-muted">Item Terjual</small>
+    </div>
+  </div>
+  <div class="col-md-3">
+    <div class="card shadow-sm text-center p-3">
+      <h4 class="fw-bold text-danger mb-0">Rp {{ "{:,.0f}".format(avg_order or 0) }}</h4>
+      <small class="text-muted">Rata-rata Pesanan</small>
+    </div>
+  </div>
+</div>
+
+<!-- Tabel Detail -->
+<div class="card shadow-sm">
+  <div class="card-header d-flex justify-content-between align-items-center">
+    <span class="fw-bold">Detail Pesanan</span>
+    <a href="{{ request.url }}&export=csv" class="btn btn-sm btn-outline-success">
+      <i class="fas fa-download me-1"></i> Export CSV
+    </a>
+  </div>
+  <div class="card-body p-0">
+    <table class="table table-hover mb-0">
+      <thead class="table-dark">
+        <tr>
+          <th>No. Pesanan</th>
+          <th>Pelanggan</th>
+          <th>Produk</th>
+          <th>Total</th>
+          <th>Status</th>
+          <th>Tanggal</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for order in orders or [] %}
+        <tr>
+          <td><span class="fw-semibold">{{ order.order_number }}</span></td>
+          <td>{{ order.user.username }}</td>
+          <td>
+            {% for item in order.order_items %}
+              <span style="font-size:12px">{{ item.product.name }} ×{{ item.quantity }}</span>{% if not loop.last %}, {% endif %}
+            {% endfor %}
+          </td>
+          <td class="fw-semibold">Rp {{ "{:,.0f}".format(order.total) }}</td>
+          <td>
+            <span class="badge bg-{{
+              'warning text-dark' if order.status == 'pending' else
+              'info text-dark' if order.status == 'processing' else
+              'primary' if order.status == 'shipped' else
+              'success' if order.status == 'done' else
+              'danger'
+            }}">{{ order.status }}</span>
+          </td>
+          <td style="font-size:12px">{{ order.created_at.strftime("%d %b %Y") }}</td>
+        </tr>
+        {% else %}
+        <tr>
+          <td colspan="6" class="text-center text-muted py-4">Tidak ada data pesanan</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</div>
+{% endblock %}

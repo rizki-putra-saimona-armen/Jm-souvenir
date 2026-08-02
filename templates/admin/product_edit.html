@@ -1,0 +1,133 @@
+{% extends "base.html" %}
+{% block title %}Edit Produk - Admin{% endblock %}
+{% block content %}
+<div class="container py-3" style="max-width:760px">
+
+  <div class="d-flex align-items-center gap-3 mb-4">
+    <a href="{{ url_for('admin.products') }}" class="btn btn-outline-secondary" style="border-radius:20px;font-size:13px">
+      <i class="fas fa-arrow-left me-1"></i> Kembali
+    </a>
+    <h4 class="mb-0" style="font-family:'Playfair Display',serif;color:var(--primary-dark)">
+      Edit Produk
+    </h4>
+  </div>
+
+  <div class="content-card">
+    <form method="POST" enctype="multipart/form-data">
+
+      <!-- PREVIEW GAMBAR SEKARANG -->
+      <div class="mb-4 text-center">
+        <p style="font-size:13px;font-weight:700;color:var(--primary-dark);margin-bottom:10px">
+          <i class="fas fa-image me-1" style="color:var(--accent)"></i> Gambar Sekarang
+        </p>
+        <img id="previewImg"
+             src="{{ product.image_url or 'https://picsum.photos/seed/' ~ product.id ~ '/300/200' }}"
+             style="width:100%;max-width:340px;height:220px;object-fit:cover;border-radius:var(--radius-lg);border:2px solid var(--primary-light)"/>
+      </div>
+
+      <hr style="border-color:var(--primary-light);margin:20px 0">
+
+      <!-- GANTI GAMBAR -->
+      <div class="mb-4">
+        <p style="font-size:14px;font-weight:700;color:var(--primary-dark);margin-bottom:14px">
+          🖼️ Ganti Gambar — pilih salah satu cara:
+        </p>
+
+        <!-- CARA 1: Upload file -->
+        <div style="background:var(--bg);border:2px dashed var(--primary-light);border-radius:var(--radius);padding:18px;margin-bottom:12px">
+          <p style="font-size:13px;font-weight:700;color:var(--primary);margin-bottom:6px">
+            📁 Cara 1 — Upload dari komputer
+          </p>
+          <input type="file" name="image_file" class="form-control" accept="image/*"
+                 style="font-size:13px"
+                 onchange="previewFile(this)"/>
+          <p style="font-size:11.5px;color:var(--text-muted);margin-top:6px;margin-bottom:0">
+            Format: JPG, PNG, WEBP. Ukuran max: 5MB
+          </p>
+        </div>
+
+        <!-- CARA 2: URL gambar -->
+        <div style="background:var(--bg);border:1px solid var(--primary-light);border-radius:var(--radius);padding:18px">
+          <p style="font-size:13px;font-weight:700;color:var(--primary);margin-bottom:6px">
+            🔗 Cara 2 — Paste link gambar dari internet
+          </p>
+          <input type="text" name="image_url" class="form-control"
+                 placeholder="https://contoh.com/gambar-produk.jpg"
+                 value="{{ product.image_url or '' }}"
+                 style="font-size:13px"
+                 oninput="previewUrl(this.value)"/>
+          <p style="font-size:11.5px;color:var(--text-muted);margin-top:6px;margin-bottom:0">
+            Pastikan link gambar bisa diakses publik
+          </p>
+        </div>
+      </div>
+
+      <hr style="border-color:var(--primary-light);margin:20px 0">
+
+      <!-- DATA PRODUK -->
+      <p style="font-size:14px;font-weight:700;color:var(--primary-dark);margin-bottom:14px">
+        📝 Data Produk
+      </p>
+
+      <div class="mb-3">
+        <label class="form-label" style="font-size:13px;font-weight:600;color:var(--dark)">Nama Produk</label>
+        <input type="text" name="name" class="form-control" value="{{ product.name }}" required style="font-size:13.5px"/>
+      </div>
+
+      <div class="mb-3">
+        <label class="form-label" style="font-size:13px;font-weight:600;color:var(--dark)">Deskripsi</label>
+        <textarea name="description" class="form-control" rows="3" style="font-size:13.5px">{{ product.description or '' }}</textarea>
+      </div>
+
+      <div class="row g-3 mb-3">
+        <div class="col-6">
+          <label class="form-label" style="font-size:13px;font-weight:600;color:var(--dark)">Harga (Rp)</label>
+          <input type="number" name="price" class="form-control" value="{{ product.price }}" required style="font-size:13.5px"/>
+        </div>
+        <div class="col-6">
+          <label class="form-label" style="font-size:13px;font-weight:600;color:var(--dark)">Harga Coret (opsional)</label>
+          <input type="number" name="original_price" class="form-control" value="{{ product.original_price or '' }}" style="font-size:13.5px"/>
+        </div>
+      </div>
+
+      <div class="row g-3 mb-4">
+        <div class="col-6">
+          <label class="form-label" style="font-size:13px;font-weight:600;color:var(--dark)">Stok</label>
+          <input type="number" name="stock" class="form-control" value="{{ product.stock }}" required style="font-size:13.5px"/>
+        </div>
+        <div class="col-6">
+          <label class="form-label" style="font-size:13px;font-weight:600;color:var(--dark)">Kategori</label>
+          <select name="category_id" class="form-select" style="font-size:13.5px">
+            {% for cat in categories %}
+            <option value="{{ cat.id }}" {{ 'selected' if product.category_id == cat.id }}>{{ cat.name }}</option>
+            {% endfor %}
+          </select>
+        </div>
+      </div>
+
+      <div class="d-flex gap-2">
+        <button type="submit" class="btn btn-primary px-4 py-2" style="border-radius:20px;font-weight:700">
+          <i class="fas fa-save me-2"></i>Simpan Perubahan
+        </button>
+        <a href="{{ url_for('admin.products') }}" class="btn btn-outline-secondary px-4" style="border-radius:20px">
+          Batal
+        </a>
+      </div>
+
+    </form>
+  </div>
+</div>
+
+<script>
+function previewFile(input) {
+  if (input.files && input.files[0]) {
+    const reader = new FileReader();
+    reader.onload = e => document.getElementById('previewImg').src = e.target.result;
+    reader.readAsDataURL(input.files[0]);
+  }
+}
+function previewUrl(url) {
+  if (url) document.getElementById('previewImg').src = url;
+}
+</script>
+{% endblock %}

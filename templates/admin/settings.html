@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+{% block title %}Pengaturan Toko - Admin{% endblock %}
+{% block content %}
+<h3 class="fw-bold mb-4">⚙️ Pengaturan Toko</h3>
+<div class="card shadow-sm p-4" style="max-width:600px">
+  <form method="POST">
+    <div class="mb-3">
+      <label class="form-label fw-semibold">Nama Toko</label>
+      <input type="text" name="store_name" class="form-control" value="JM Souvenir">
+    </div>
+    <div class="mb-3">
+      <label class="form-label fw-semibold">Email Toko</label>
+      <input type="email" name="store_email" class="form-control" value="info@jmsouvenir.com">
+    </div>
+    <div class="mb-3">
+      <label class="form-label fw-semibold">No. HP / WhatsApp</label>
+      <input type="text" name="store_phone" class="form-control" value="+62 274 123 4567">
+    </div>
+    <div class="mb-3">
+      <label class="form-label fw-semibold">Alamat Toko</label>
+      <textarea name="store_address" class="form-control" rows="2">Yogyakarta, Indonesia</textarea>
+    </div>
+    <div class="mb-4">
+      <label class="form-label fw-semibold">Minimum Belanja Gratis Ongkir (Rp)</label>
+      <input type="number" name="free_shipping_min" class="form-control" value="50000">
+    </div>
+    <button type="submit" class="btn btn-primary">Simpan Pengaturan</button>
+  </form>
+</div>
+{% endblock %}

@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+{% block title %}Login Admin - JM Souvenir{% endblock %}
+{% block content %}
+<div class="container" style="max-width:420px;margin:50px auto">
+
+  <div class="content-card" style="border-top:3px solid var(--accent);padding:36px 32px">
+
+    <!-- Icon & Judul -->
+    <div class="text-center mb-4">
+      <div style="width:62px;height:62px;background:var(--accent-light);border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0 auto 14px;border:2px solid var(--accent)">
+        <i class="fas fa-lock" style="font-size:1.4rem;color:var(--accent)"></i>
+      </div>
+      <h4 style="font-family:'Playfair Display',serif;color:var(--primary-dark);margin-bottom:4px">Login Admin</h4>
+      <p style="font-size:13px;color:var(--text-muted);margin:0">Khusus pengelola toko</p>
+    </div>
+
+    {% with messages = get_flashed_messages(with_categories=true) %}
+      {% if messages %}
+        {% for cat, msg in messages %}
+          <div class="alert alert-{{ cat }} mb-3">{{ msg }}</div>
+        {% endfor %}
+      {% endif %}
+    {% endwith %}
+
+    <form method="POST">
+      <div class="mb-3">
+        <label class="form-label">Email Admin</label>
+        <input type="email" name="email" class="form-control" placeholder="Masukkan email" required autofocus>
+      </div>
+      <div class="mb-4">
+        <label class="form-label">Password</label>
+        <input type="password" name="password" class="form-control" placeholder="Masukkan password" required>
+      </div>
+      <button type="submit" class="btn btn-primary w-100 py-2" style="font-size:14px;border-radius:var(--radius)">
+        <i class="fas fa-sign-in-alt me-2"></i> Masuk sebagai Admin
+      </button>
+    </form>
+
+  </div>
+</div>
+{% endblock %}

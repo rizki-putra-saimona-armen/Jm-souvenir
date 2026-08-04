@@ -1,0 +1,80 @@
+{% extends "base.html" %}
+{% block title %}Alamat Saya - JM Souvenir{% endblock %}
+{% block content %}
+<div class="container" style="max-width:700px;margin:40px auto">
+  <div class="d-flex justify-content-between align-items-center mb-4">
+    <h4 class="fw-bold"><i class="fas fa-map-marker-alt me-2 text-warning"></i>Alamat Saya</h4>
+    <button class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#addModal">+ Tambah Alamat</button>
+  </div>
+  {% if addresses %}
+    {% for addr in addresses %}
+    <div class="card shadow-sm mb-3 p-3">
+      <div class="d-flex justify-content-between">
+        <div>
+          <div class="fw-semibold">{{ addr.label or 'Rumah' }}
+            {% if addr.is_default %}<span class="badge bg-success ms-1" style="font-size:11px">Utama</span>{% endif %}
+          </div>
+          <div style="font-size:13px;color:#555">{{ addr.street }}, {{ addr.district }}, {{ addr.city }} {{ addr.postal_code }}</div>
+        </div>
+        <div class="d-flex gap-2 align-items-start">
+          {% if not addr.is_default %}
+          <form method="POST" action="{{ url_for('user.set_default_address', address_id=addr.id) }}">
+            <button class="btn btn-outline-success btn-sm">Jadikan Utama</button>
+          </form>
+          {% endif %}
+          <form method="POST" action="{{ url_for('user.delete_address', address_id=addr.id) }}">
+            <button class="btn btn-outline-danger btn-sm">Hapus</button>
+          </form>
+        </div>
+      </div>
+    </div>
+    {% endfor %}
+  {% else %}
+    <div class="text-center py-5 text-muted">
+      <i class="fas fa-map-marker-alt fa-3x mb-3"></i>
+      <p>Belum ada alamat tersimpan</p>
+    </div>
+  {% endif %}
+</div>
+
+<!-- Modal Tambah Alamat -->
+<div class="modal fade" id="addModal" tabindex="-1">
+  <div class="modal-dialog">
+    <div class="modal-content p-3">
+      <div class="modal-header border-0">
+        <h5 class="modal-title fw-bold">Tambah Alamat</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+      </div>
+      <form method="POST" action="{{ url_for('user.add_address') }}">
+        <div class="modal-body">
+          <div class="mb-3">
+            <label class="form-label">Label (Rumah/Kantor)</label>
+            <input type="text" name="label" class="form-control" placeholder="Rumah">
+          </div>
+          <div class="mb-3">
+            <label class="form-label">Jalan / Detail Alamat</label>
+            <textarea name="street" class="form-control" rows="2" required></textarea>
+          </div>
+          <div class="row">
+            <div class="col-md-6 mb-3">
+              <label class="form-label">Kecamatan</label>
+              <input type="text" name="district" class="form-control" required>
+            </div>
+            <div class="col-md-6 mb-3">
+              <label class="form-label">Kota</label>
+              <input type="text" name="city" class="form-control" required>
+            </div>
+          </div>
+          <div class="mb-3">
+            <label class="form-label">Kode Pos</label>
+            <input type="text" name="postal_code" class="form-control" required>
+          </div>
+        </div>
+        <div class="modal-footer border-0">
+          <button type="submit" class="btn btn-primary">Simpan</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+{% endblock %}

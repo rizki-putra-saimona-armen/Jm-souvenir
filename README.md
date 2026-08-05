@@ -138,7 +138,7 @@ python seed.py
 ```bash
 python app.py
 ```
-Aplikasi akan berjalan di **http://localhost:5000** 🎉
+Aplikasi akan berjalan di **http://localhost:5000** 
 
 ---
 
